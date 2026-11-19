@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # SlideCraft Studio — Complete Local Project
 
 A Flask-based presentation studio with a polished landing page, sign-up/login, a personal workspace, detailed AI slide generation, PPTX analysis, text-based comparison, basic text cleanup, and PDF, PowerPoint, and Word export.
@@ -96,3 +97,7 @@ Restart Flask after configuring credentials. Firefly uses Adobe's OAuth server-t
 The `.env` file is in the same folder as `app.py`. Open `.env` and edit this line:
 `GEMINI_API_KEY=PASTE_YOUR_KEY_HERE`
 Save the file and restart the Flask server. Obtain your own key from Google AI Studio. Never share or commit `.env`.
+=======
+# SLIDE-CRAFT
+ AI-powered academic presentation generator with smart content creation, template recommendations, editable previews, quality assessment, and PPTX export.
+>>>>>>> 54b040f6849a5b231a2135dd8a5b15b65e97964c
