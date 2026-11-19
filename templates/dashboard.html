@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% block title %}Workspace — SlideCraft Studio{% endblock %}
+{% block body_class %}app-body{% endblock %}
+{% block content %}
+<div class="app-layout">
+  <aside class="sidebar">
+    <a class="brand sidebar-brand" href="{{ url_for('home') }}"><span class="brand-mark">S</span><span>slidecraft<span class="brand-light"> studio</span></span></a>
+    <div class="side-label">WORKSPACE</div>
+    <a class="side-link {% if active == 'overview' %}active{% endif %}" href="{{ url_for('dashboard') }}"><span>▦</span> Overview</a>
+    <a class="side-link" href="{{ url_for('create') }}"><span>✦</span> Create a deck <i>＋</i></a>
+    <a class="side-link" href="{{ url_for('analyze_page') }}"><span>◈</span> Analyze slides</a>
+    <a class="side-link" href="{{ url_for('compare_page') }}"><span>⇄</span> Compare decks</a>
+    <a class="side-link" href="{{ url_for('optimize_page') }}"><span>↗</span> Optimize content</a>
+    <a class="side-link {% if active == 'account' %}active{% endif %}" href="{{ url_for('account') }}"><span>◎</span> Your Account</a>
+    <div class="sidebar-bottom"><div class="side-tip"><span>✦ YOUR CREATIVE NOTE</span><p>Great presentations don't say everything. They make the important things impossible to miss.</p></div><div class="side-user"><div class="user-avatar">{{ current_user.name[:1].upper() }}</div><div><b>{{ current_user.name }}</b><small>{{ current_user.email }}</small></div><a href="{{ url_for('logout') }}" title="Sign out">↗</a></div></div>
+  </aside>
+  <main class="app-main">
+    <header class="app-topbar"><div class="breadcrumb">Workspace <span>/</span> Overview</div><div class="topbar-right"><button type="button" class="theme-toggle cursor-toggle" aria-pressed="true"><svg aria-hidden="true" focusable="false" viewBox="0 0 20 24" width="14" height="16"><path fill="currentColor" d="M3 2.5v17l4.8-4.6 3.2 7.1 2.7-1.2-3.3-7h6.9L3 2.5z"/></svg> <span>On</span></button><span class="status-pill"><i></i> All systems ready</span><div class="top-avatar">{{ current_user.name[:1].upper() }}</div></div></header>
+    <section class="welcome-row"><div><div class="eyebrow eyebrow-dark">MONDAY STARTS WITH POSSIBILITY</div><h1>Good to have you here, {{ current_user.name.split()[0] }}<span class="wave">✦</span></h1><p>What story are we bringing to life today?</p></div><a class="button button-blue" href="{{ url_for('create') }}">＋ Create a presentation</a></section>
+    <section class="dashboard-hero"><div class="dash-hero-copy"><span class="dash-kicker">YOUR NEXT BIG IDEA</span><h2>A blank page is<br>a world of <em>possibility.</em></h2><p>Start with a thought. Leave with a story.</p><a class="button button-white" href="{{ url_for('create') }}">Create your first deck <span>↗</span></a></div><div class="dash-hero-art"><div class="art-card art-card-back"><span>THE BIG PICTURE</span><div class="art-bars"><i></i><i></i><i></i><i></i><i></i></div></div><div class="art-card art-card-front"><span>SLIDECRAFT / 001</span><b>Think<br><em>in stories.</em></b><div class="art-sun"></div></div><div class="dash-orbit"></div></div></section>
+    <section class="quick-actions"><div class="section-title-row"><div><span class="eyebrow eyebrow-dark">YOUR TOOLKIT</span><h2>Make your next move.</h2></div></div><div class="quick-grid"><a href="{{ url_for('create') }}" class="quick-card"><span class="quick-icon icon-blue">✦</span><span class="quick-arrow">↗</span><b>Create a presentation</b><p>Turn a topic into complete, editable slide content.</p></a><a href="{{ url_for('analyze_page') }}" class="quick-card"><span class="quick-icon icon-purple">◈</span><span class="quick-arrow">↗</span><b>Analyze a deck</b><p>Review clarity, structure, and balance.</p></a><a href="{{ url_for('compare_page') }}" class="quick-card"><span class="quick-icon icon-green">⇄</span><span class="quick-arrow">↗</span><b>Compare presentations</b><p>See how two decks stack up.</p></a><a href="{{ url_for('optimize_page') }}" class="quick-card"><span class="quick-icon icon-orange">↗</span><span class="quick-arrow">↗</span><b>Optimize content</b><p>Clean up text and reduce clutter.</p></a></div></section>
+    <section class="recent-section"><div class="section-title-row"><div><span class="eyebrow eyebrow-dark">PICK UP WHERE YOU LEFT OFF</span><h2>Recent projects</h2></div><a class="text-link dark-link" href="{{ url_for('create') }}">Create new <span>↗</span></a></div>
+      {% if projects %}<div class="project-list">{% for project in projects %}<div class="project-row"><div class="project-thumb"><span>✦</span></div><div class="project-info"><b>{{ project.title }}</b><small>{{ project.slide_count }} slides · {{ project.created_at }}</small></div><span class="project-topic">{{ project.topic }}</span><span class="project-badge">SAVED</span></div>{% endfor %}</div>{% else %}<div class="empty-projects"><div class="empty-icon">✧</div><div><b>Your next great idea will live here.</b><p>Once you generate a presentation, it will show up in this list.</p></div><a class="button button-outline" href="{{ url_for('create') }}">Make something <span>↗</span></a></div>{% endif %}
+    </section>
+    <footer class="app-footer"><span>SLIDECRAFT STUDIO</span><span>Make room for big ideas. ✦</span></footer>
+  </main>
+</div>
+{% endblock %}

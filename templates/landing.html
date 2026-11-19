@@ -1,0 +1,66 @@
+{% extends "base.html" %}
+{% block title %}SlideCraft Studio — Ideas into extraordinary decks{% endblock %}
+{% block body_class %}landing-body{% endblock %}
+{% block content %}
+<header class="site-nav">
+  <a class="brand" href="{{ url_for('home') }}"><span class="brand-mark">S</span><span>slidecraft<span class="brand-light"> studio</span></span></a>
+  <nav class="nav-links"><a href="#features">Features</a><a href="#workflow">How it works</a><a href="#about">About</a><a href="{{ url_for('create') }}">Create a deck</a></nav>
+  <div class="nav-actions"><button type="button" class="theme-toggle" aria-pressed="false">☼ <span>Light</span></button><button type="button" class="theme-toggle cursor-toggle" aria-pressed="true"><svg aria-hidden="true" focusable="false" viewBox="0 0 20 24" width="14" height="16"><path fill="currentColor" d="M3 2.5v17l4.8-4.6 3.2 7.1 2.7-1.2-3.3-7h6.9L3 2.5z"/></svg> <span>On</span></button><a class="nav-login" href="{{ url_for('login') }}">Log in</a><a class="nav-login" href="{{ url_for('guest_login') }}">Continue as guest</a><a class="button button-small button-blue" href="{{ url_for('signup') }}">Start for free <span>↗</span></a></div>
+</header>
+<main>
+  <section class="hero">
+    <div class="starfield"></div><div class="orb orb-one"></div><div class="orb orb-two"></div>
+    <div class="hero-copy">
+      <div class="eyebrow"><span class="pulse-dot"></span> YOUR IDEAS, BEAUTIFULLY IN FOCUS</div>
+      <h1>Turn big ideas into<br><span class="gradient-text">brilliant stories.</span></h1>
+      <p class="hero-subtitle">A calmer, smarter way to create presentations. Go from a blank page to a story worth sharing — with a little help from AI.</p>
+      <div class="hero-actions"><a class="button button-white" href="{{ url_for('signup') }}">Start creating for free <span>↗</span></a><a class="button button-small button-ghost" href="{{ url_for('guest_login') }}">Continue as Guest</a><a class="text-link" href="#workflow">See how it works <span>↓</span></a></div>
+      <div class="hero-proof"><div class="avatar-stack"><i>P</i><i>A</i><i>S</i><i>+</i></div><span>Made for curious minds and ambitious ideas.</span></div>
+    </div>
+    <div class="hero-visual" aria-label="Presentation preview">
+      <div class="visual-glow"></div>
+      <div class="mini-card mini-card-left"><span class="mini-label">01 / INSIGHT</span><div class="mini-chart"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div><b>Ideas into impact.</b><small>Research · Strategy · Growth</small></div>
+      <div class="deck-card">
+        <div class="deck-top"><span class="deck-brand"><span class="tiny-mark">S</span> SLIDECRAFT</span><span class="deck-chip">AI GENERATED</span></div>
+        <div class="deck-content"><div class="deck-kicker">THE FUTURE IS</div><h2>Made of<br><em>possibility.</em></h2><p>Build a story people remember.</p><div class="deck-shape"><div class="shape-ring"></div><div class="shape-orb"></div><div class="shape-line"></div></div></div>
+        <div class="deck-footer"><span>01 — INTRODUCTION</span><span>2026</span></div>
+      </div>
+      <div class="floating-pill pill-top"><span class="pill-icon">✦</span><span><b>Story-first AI</b><small>From prompt to plan</small></span></div>
+      <div class="floating-pill pill-bottom"><span class="pill-icon pill-green">↗</span><span><b>Ready to present</b><small>Export to PowerPoint</small></span></div>
+      <div class="mini-card mini-card-right"><div class="donut"><span>+38%</span></div><small>Clarity score</small><b>Looking sharp.</b></div>
+    </div>
+    <div class="hero-bottom"><span>DESIGNED FOR YOUR NEXT BIG THING</span><div><span>STUDENTS</span><span>CREATORS</span><span>TEAMS</span><span>BUILDERS</span></div></div>
+  </section>
+  <section class="feature-section section-wrap reveal" id="features">
+    <div class="section-heading"><div class="eyebrow eyebrow-dark">LESS BUSYWORK. MORE BIG PICTURE.</div><h2>Your best thinking,<br><span class="soft-gradient">beautifully presented.</span></h2><p>Everything you need to shape a strong story, refine your message, and get it ready to share.</p></div>
+    <div class="feature-grid">
+      <article class="feature-card feature-lilac reveal reveal-delay-1"><div class="feature-symbol">✦</div><span class="feature-index">01 / CREATE</span><h3>Start with a spark.</h3><p>Give your topic, audience, and goal. Get detailed, editable slide explanations and key points in moments.</p><div class="fake-prompt"><span>✧</span> The future of sustainable cities <b>↗</b></div></article>
+      <article class="feature-card feature-mint reveal reveal-delay-2"><div class="feature-symbol">◈</div><span class="feature-index">02 / REFINE</span><h3>Make every slide count.</h3><p>Review clarity, structure, and text density. Find the places where your story can be stronger.</p><div class="score-preview"><div><small>STORY SCORE</small><b>92<span>/100</span></b></div><div class="score-line"><i></i></div></div></article>
+      <article class="feature-card feature-peach reveal reveal-delay-3"><div class="feature-symbol">↗</div><span class="feature-index">03 / SHARE</span><h3>Take it anywhere.</h3><p>Download a polished PDF of your finished presentation, ready to share or print.</p><div class="file-preview"><span class="ppt-icon">P</span><span><b>Your next big idea.pdf</b><small>Presentation PDF</small></span><span class="file-check">✓</span></div></article>
+    </div>
+  </section>
+  <section class="workflow-section reveal" id="workflow"><div class="workflow-inner"><div><div class="eyebrow">A SIMPLE CREATIVE FLOW</div><h2>From “what if?”<br>to <span class="gradient-text">“here it is.”</span></h2><p class="workflow-copy">Keep your energy on the idea. SlideCraft helps you organize it into a presentation you can make your own.</p><a class="button button-white" href="{{ url_for('signup') }}">Build your first deck <span>↗</span></a></div><div class="steps"><div class="step reveal reveal-delay-1"><span>01</span><div><b>Tell us the idea</b><p>Choose a topic, audience, purpose, and tone.</p></div><i>✦</i></div><div class="step reveal reveal-delay-2"><span>02</span><div><b>Shape the story</b><p>Generate detailed slide content, edit each slide, and add speaker notes.</p></div><i>◈</i></div><div class="step reveal reveal-delay-3"><span>03</span><div><b>Make it yours</b><p>Review your content and download a polished PDF.</p></div><i>↗</i></div></div></div></section>
+  <section class="final-cta section-wrap reveal" id="about"><div class="cta-spark">✦</div><div class="eyebrow eyebrow-dark">YOUR NEXT CHAPTER STARTS HERE</div><h2>Good ideas deserve<br>a great stage.</h2><p>Make your next presentation the one people remember.</p><a class="button button-blue" href="{{ url_for('signup') }}">Start for free <span>↗</span></a><small>No complicated setup. Just you and your next idea.</small></section>
+</main>
+<footer class="site-footer"><a class="brand brand-footer" href="{{ url_for('home') }}"><span class="brand-mark">S</span><span>slidecraft<span class="brand-light"> studio</span></span></a><span>Made for ideas that move people.</span><span>© 2026 SlideCraft Studio</span></footer>
+<style>
+  .button-ghost{background:rgba(255,255,255,.10);border:1px solid rgba(255,255,255,.24);color:#fff}.button-ghost:hover{background:rgba(255,255,255,.18)}.reveal{opacity:0;transform:translateY(28px);transition:opacity .6s ease,transform .6s cubic-bezier(.2,.8,.2,1);will-change:opacity,transform}.reveal.is-visible{opacity:1;transform:none}.reveal-delay-1{transition-delay:90ms}.reveal-delay-2{transition-delay:180ms}.reveal-delay-3{transition-delay:270ms}@media (prefers-reduced-motion: reduce){.reveal{opacity:1;transform:none;transition:none}}
+</style>
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      document.querySelectorAll('.reveal').forEach(el => el.classList.add('is-visible'));
+      return;
+    }
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('is-visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.15, rootMargin: '0px 0px -30px 0px' });
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+  });
+</script>
+{% endblock %}

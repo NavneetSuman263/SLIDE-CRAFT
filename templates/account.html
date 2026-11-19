@@ -1,0 +1,129 @@
+{% extends "base.html" %}
+{% block title %}Your Account — SlideCraft Studio{% endblock %}
+{% block body_class %}app-body{% endblock %}
+{% block content %}
+<div class="app-layout">
+  <aside class="sidebar">
+    <a class="brand sidebar-brand" href="{{ url_for('home') }}"><span class="brand-mark">S</span><span>slidecraft<span class="brand-light"> studio</span></span></a>
+    <div class="side-label">WORKSPACE</div>
+    {% if not guest_mode %}
+      <a class="side-link" href="{{ url_for('dashboard') }}"><span>▦</span> Overview</a>
+    {% endif %}
+    <a class="side-link" href="{{ url_for('create') }}"><span>✦</span> Create a deck</a>
+    <a class="side-link" href="{{ url_for('analyze_page') }}"><span>◈</span> Analyze slides</a>
+    <a class="side-link" href="{{ url_for('compare_page') }}"><span>⇄</span> Compare decks</a>
+    <a class="side-link" href="{{ url_for('optimize_page') }}"><span>↗</span> Optimize content</a>
+    <a class="side-link active" href="{{ url_for('account') }}"><span>◎</span> Your Account</a>
+    <div class="sidebar-bottom">
+      <div class="side-tip"><span>✦ ACCOUNT NOTE</span><p>Keep your workspace secure and your ideas ready to share.</p></div>
+      <div class="side-user">
+        <div class="user-avatar">{{ (current_user.name if current_user else user.name)[:1].upper() }}</div>
+        <div><b>{{ current_user.name if current_user else user.name }}</b><small>{{ current_user.email if current_user else user.email }}</small></div>
+        {% if current_user %}<a href="{{ url_for('logout') }}" title="Sign out">↗</a>{% else %}<a href="{{ url_for('login') }}" title="Sign in">↗</a>{% endif %}
+      </div>
+    </div>
+  </aside>
+  <main class="app-main">
+    <header class="app-topbar"><div class="breadcrumb"><a href="{{ url_for('dashboard') if current_user else url_for('create') }}">Workspace</a> <span>/</span> Your Account</div><div class="topbar-right"><button type="button" class="theme-toggle" aria-pressed="false">☼ <span>Light</span></button><button type="button" class="theme-toggle cursor-toggle" aria-pressed="true"><svg aria-hidden="true" focusable="false" viewBox="0 0 20 24" width="14" height="16"><path fill="currentColor" d="M3 2.5v17l4.8-4.6 3.2 7.1 2.7-1.2-3.3-7h6.9L3 2.5z"/></svg> <span>On</span></button><span class="status-pill"><i></i> {{ 'Secure session' if not guest_mode else 'Guest mode' }}</span><div class="top-avatar">{{ (current_user.name if current_user else user.name)[:1].upper() }}</div></div></header>
+    {% if guest_mode %}
+      <section class="account-hero">
+        <div class="account-hero-card">
+          <div class="user-avatar large">G</div>
+          <div>
+            <div class="eyebrow eyebrow-dark">GUEST MODE</div>
+            <h1>Continue without an account</h1>
+            <p>You are exploring SlideCraft without saving a personal history.</p>
+          </div>
+        </div>
+        <div class="account-status-card">
+          <div class="eyebrow eyebrow-dark">NEXT STEP</div>
+          <h3>Sign in to save your work</h3>
+          <p>Continue building presentations as a guest, or create an account to keep projects and profile settings.</p>
+        </div>
+      </section>
+      <section class="account-grid">
+        <div class="account-panel wide-panel">
+          <div class="panel-header"><span class="eyebrow eyebrow-dark">GUEST ACCESS</span><h2>What you can do right now</h2></div>
+          <div class="account-meta-grid">
+            <div><small>Build decks</small><b>Unlimited while you browse</b></div>
+            <div><small>Save history</small><b>Requires a signed-in account</b></div>
+            <div><small>Private profile</small><b>Available after sign in</b></div>
+          </div>
+          <div class="account-actions">
+            <a class="button button-blue" href="{{ url_for('create') }}">Keep creating</a>
+            <a class="button button-outline" href="{{ url_for('login') }}">Sign in</a>
+          </div>
+        </div>
+      </section>
+    {% else %}
+      <section class="account-hero">
+        <div class="account-hero-card">
+          <div class="user-avatar large">{{ user.name[:1].upper() }}</div>
+          <div>
+            <div class="eyebrow eyebrow-dark">PROFILE SUMMARY</div>
+            <h1>{{ user.name }}</h1>
+            <p>{{ user.email }}</p>
+          </div>
+        </div>
+        <div class="account-status-card">
+          <div class="eyebrow eyebrow-dark">YOUR CREATIVE SPACE</div>
+          <h3>Account settings</h3>
+          <p>Manage your profile, sign-in details, and workspace security here.</p>
+        </div>
+      </section>
+
+      <section class="account-grid">
+        <div class="account-panel">
+          <div class="panel-header">
+            <span class="eyebrow eyebrow-dark">PROFILE</span>
+            <h2>Account settings</h2>
+          </div>
+          <form method="post" action="{{ url_for('account') }}" class="account-form">
+            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+            <input type="hidden" name="action" value="profile">
+            <label>Display name<input name="name" type="text" value="{{ user.name }}" maxlength="80" required></label>
+            <label>Email address<input type="text" value="{{ user.email }}" readonly></label>
+            <label>Login provider<input type="text" value="{{ (user.auth_provider or 'email')|title }}" readonly></label>
+            <button class="button button-blue" type="submit">Save profile</button>
+          </form>
+        </div>
+
+        <div class="account-panel">
+          <div class="panel-header">
+            <span class="eyebrow eyebrow-dark">SECURITY</span>
+            <h2>Change password</h2>
+          </div>
+          <form method="post" action="{{ url_for('account') }}" class="account-form">
+            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+            <input type="hidden" name="action" value="password">
+            <label>Current password<input name="current_password" type="password" autocomplete="current-password" required></label>
+            <label>New password<input name="new_password" type="password" autocomplete="new-password" minlength="8" required></label>
+            <label>Confirm new password<input name="confirm_password" type="password" autocomplete="new-password" minlength="8" required></label>
+            <button class="button button-outline" type="submit">Update password</button>
+          </form>
+        </div>
+
+        <div class="account-panel wide-panel">
+          <div class="panel-header">
+            <span class="eyebrow eyebrow-dark">ACCOUNT</span>
+            <h2>Privacy and session</h2>
+          </div>
+          <div class="account-meta-grid">
+            <div><small>Member since</small><b>{{ user.created_at }}</b></div>
+            <div><small>Signed in as</small><b>{{ user.email }}</b></div>
+            <div><small>Login method</small><b>{{ (user.auth_provider or 'email')|title }}</b></div>
+          </div>
+          <div class="account-actions">
+            <a class="button button-outline" href="{{ url_for('logout') }}">Log out</a>
+          </div>
+        </div>
+      </section>
+    {% endif %}
+    <footer class="app-footer"><span>SLIDECRAFT STUDIO</span><span>Make room for big ideas. ✦</span></footer>
+  </main>
+</div>
+
+<style>
+  .account-hero{display:grid;grid-template-columns:1.6fr 1fr;gap:20px;margin:28px 0 18px}.account-hero-card,.account-status-card,.account-panel{background:#fff;border:1px solid #edf1f8;border-radius:22px;box-shadow:0 18px 40px rgba(13,27,58,.04)}.account-hero-card{display:flex;align-items:center;gap:18px;padding:28px}.account-hero-card h1{margin:10px 0 6px;font:800 44px/1.05 Manrope,sans-serif;letter-spacing:-2px;color:#101a32}.account-hero-card p,.account-status-card p{margin:0;color:#66718c}.user-avatar.large{width:72px;height:72px;border-radius:18px;font:800 26px/72px Manrope,sans-serif}.account-status-card{padding:26px 24px}.account-status-card h3{margin:12px 0 8px;font:800 28px Manrope,sans-serif;letter-spacing:-1.2px}.account-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:20px}.account-panel{padding:26px 24px}.wide-panel{grid-column:1 / -1}.panel-header{margin-bottom:18px}.panel-header h2{margin:10px 0 0;font:800 24px Manrope,sans-serif;letter-spacing:-.8px}.account-form{display:flex;flex-direction:column;gap:16px}.account-form label{display:flex;flex-direction:column;gap:8px;font-weight:700;color:#1f2d4a}.account-form input{padding:14px 16px;border:1px solid #dfe5f0;border-radius:12px;background:#f9fafc;font:inherit;color:#1f2d4a}.account-form input[readonly]{background:#f3f5fa;color:#66718c}.account-meta-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}.account-meta-grid small{display:block;color:#7a8398;margin-bottom:10px}.account-meta-grid b{display:block;font-size:16px;color:#111b35}.account-actions{display:flex;justify-content:flex-end;gap:12px;margin-top:20px}.user-avatar{width:38px;height:38px;border-radius:12px;background:linear-gradient(135deg,#7ea6ff,#2d63ff);display:grid;place-items:center;color:#fff;font-weight:800}.top-avatar{width:38px;height:38px;border-radius:12px;background:linear-gradient(135deg,#dff8ee,#8ef0d6);display:grid;place-items:center;color:#10244f;font-weight:800}.side-user{display:flex;align-items:center;gap:10px}.sidebar-bottom{margin-top:auto}.@media (max-width:900px){.account-hero,.account-grid,.account-meta-grid{grid-template-columns:1fr}.account-hero-card{align-items:flex-start}.account-actions{justify-content:flex-start;flex-wrap:wrap}}
+</style>
+{% endblock %}

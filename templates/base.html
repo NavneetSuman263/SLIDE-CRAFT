@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#07142e">
+  <meta name="csrf-token" content="{{ csrf_token() }}">
+  <title>{% block title %}SlideCraft Studio{% endblock %}</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/liquid-cursor.css') }}">
+  <link id="dark-theme-stylesheet" rel="stylesheet" href="{{ url_for('static', filename='css/dark-theme.css') }}" media="not all">
+  <script>
+    (() => {
+      const saved = localStorage.getItem("slidecraft-theme");
+      const theme = saved === "dark" ? "dark" : "light";
+      document.documentElement.dataset.theme = theme;
+      document.getElementById("dark-theme-stylesheet").media = theme === "dark" ? "all" : "not all";
+      window.slidecraftSetTheme = nextTheme => {
+        const selected = nextTheme === "dark" ? "dark" : "light";
+        localStorage.setItem("slidecraft-theme", selected);
+        document.documentElement.dataset.theme = selected;
+        document.body.classList.toggle("theme-dark", selected === "dark");
+        document.getElementById("dark-theme-stylesheet").media = selected === "dark" ? "all" : "not all";
+        document.querySelectorAll(".theme-toggle:not(.cursor-toggle)").forEach(button => {
+          const dark = selected === "dark";
+          button.innerHTML = `${dark ? "☾" : "☼"} <span>${dark ? "Dark" : "Light"}</span>`;
+          button.setAttribute("aria-label", `Switch to ${dark ? "light" : "dark"} theme`);
+          button.setAttribute("aria-pressed", String(dark));
+        });
+        document.querySelectorAll(".creation-engine").forEach(screen => {
+          screen.classList.toggle("creation-engine--light", selected === "light");
+          const toggle = screen.querySelector(".creation-engine__theme");
+          if (toggle) toggle.innerHTML = `${selected === "light" ? "☾" : "☼"} <span>${selected === "light" ? "Dark mode" : "Light mode"}</span>`;
+        });
+      };
+    })();
+  </script>
+  {% block head %}{% endblock %}
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/theme-controls.css') }}">
+</head>
+<body class="{% block body_class %}{% endblock %}">
+  <script>if (document.documentElement.dataset.theme === "dark") document.body.classList.add("theme-dark");</script>
+  {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+      <div class="flash-stack">
+      {% for category, message in messages %}
+        <div class="flash flash-{{ category }}">{{ message }}</div>
+      {% endfor %}
+      </div>
+    {% endif %}
+  {% endwith %}
+  {% block content %}{% endblock %}
+  <script src="{{ url_for('static', filename='js/app.js') }}"></script>
+  <script src="{{ url_for('static', filename='js/liquid-cursor.js') }}"></script>
+  {% block scripts %}{% endblock %}
+</body>
+</html>
